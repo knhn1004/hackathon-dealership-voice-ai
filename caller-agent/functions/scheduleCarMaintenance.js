@@ -11,6 +11,10 @@ async function scheduleCarMaintenance(functionArgs) {
 		const appointmentDate = parsedDateTime.date || date;
 		const appointmentTime = parsedDateTime.time || time;
 
+		if (!appointmentDate || !appointmentTime) {
+			throw new Error('Invalid date or time provided');
+		}
+
 		const appointmentId = await dbService.create('maintenance_appointments', {
 			model,
 			date: appointmentDate,
