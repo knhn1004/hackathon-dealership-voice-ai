@@ -13,8 +13,9 @@ import { Button } from '@/components/ui/button';
 import { getCallLogs } from '@/lib/actions/call-logs';
 import { CallLog } from '@/lib/types/callLog';
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-export function CallLogsList() {
+export default function CallLogsList() {
 	const [callLogs, setCallLogs] = useState<CallLog[]>([]);
 
 	useEffect(() => {
@@ -61,35 +62,44 @@ export function CallLogsList() {
 	}
 
 	return (
-		<Table>
-			<TableHeader>
-				<TableRow>
-					<TableHead>Call SID</TableHead>
-					<TableHead>Created At</TableHead>
-					<TableHead>Ended At</TableHead>
-					<TableHead>Call Type</TableHead>
-					<TableHead>Tools Used</TableHead>
-					<TableHead>Actions</TableHead>
-				</TableRow>
-			</TableHeader>
-			<TableBody>
-				{callLogs.map(log => (
-					<TableRow key={log._id}>
-						<TableCell>{log.callSid}</TableCell>
-						<TableCell>{new Date(log.createdAt).toLocaleString()}</TableCell>
-						<TableCell>
-							{log.endedAt ? new Date(log.endedAt).toLocaleString() : 'N/A'}
-						</TableCell>
-						<TableCell>{getCallTypeBadge(log.toolsUsed)}</TableCell>
-						<TableCell>{log.toolsUsed.join(', ')}</TableCell>
-						<TableCell>
-							<Link href={`/dashboard/call-logs/${log._id}`}>
-								<Button variant="outline">View Details</Button>
-							</Link>
-						</TableCell>
-					</TableRow>
-				))}
-			</TableBody>
-		</Table>
+		<Card>
+			<CardHeader>
+				<CardTitle>Call Logs</CardTitle>
+			</CardHeader>
+			<CardContent>
+				<Table>
+					<TableHeader>
+						<TableRow>
+							<TableHead>Call SID</TableHead>
+							<TableHead>Created At</TableHead>
+							<TableHead>Ended At</TableHead>
+							<TableHead>Call Type</TableHead>
+							<TableHead>Tools Used</TableHead>
+							<TableHead>Actions</TableHead>
+						</TableRow>
+					</TableHeader>
+					<TableBody>
+						{callLogs.map(log => (
+							<TableRow key={log._id}>
+								<TableCell>{log.callSid}</TableCell>
+								<TableCell>
+									{new Date(log.createdAt).toLocaleString()}
+								</TableCell>
+								<TableCell>
+									{log.endedAt ? new Date(log.endedAt).toLocaleString() : 'N/A'}
+								</TableCell>
+								<TableCell>{getCallTypeBadge(log.toolsUsed)}</TableCell>
+								<TableCell>{log.toolsUsed.join(', ')}</TableCell>
+								<TableCell>
+									<Link href={`/dashboard/call-logs/${log._id}`}>
+										<Button variant="outline">View Details</Button>
+									</Link>
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			</CardContent>
+		</Card>
 	);
 }

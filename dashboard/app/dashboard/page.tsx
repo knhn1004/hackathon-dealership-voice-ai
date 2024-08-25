@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BarChart, PieChart } from '@/components/charts';
 import { RecentCallLogs } from '@/components/RecentCallLogs';
+import CallLogsList from '@/components/CallLogsList';
 
 export default function DashboardPage() {
 	return (
@@ -15,7 +16,7 @@ export default function DashboardPage() {
 				<Tabs defaultValue="overview" className="space-y-4">
 					<TabsList>
 						<TabsTrigger value="overview">Overview</TabsTrigger>
-						<TabsTrigger value="analytics">Analytics</TabsTrigger>
+						<TabsTrigger value="call-logs">Call Logs</TabsTrigger>
 					</TabsList>
 					<TabsContent value="overview" className="space-y-4">
 						<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -65,16 +66,19 @@ export default function DashboardPage() {
 								</CardContent>
 							</Card>
 						</div>
+						<Card>
+							<CardHeader>
+								<CardTitle>Recent Call Logs</CardTitle>
+							</CardHeader>
+							<CardContent>
+								<RecentCallLogs />
+							</CardContent>
+						</Card>
+					</TabsContent>
+					<TabsContent value="call-logs">
+						<CallLogsList />
 					</TabsContent>
 				</Tabs>
-				<Card>
-					<CardHeader>
-						<CardTitle>Recent Call Logs</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<RecentCallLogs />
-					</CardContent>
-				</Card>
 			</div>
 		</div>
 	);

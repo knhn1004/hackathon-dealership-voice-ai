@@ -61,11 +61,6 @@ export function RecentCallLogs() {
 
 	return (
 		<>
-			<div className="mt-4 flex justify-end">
-				<Link href="/dashboard/call-logs">
-					<Button>View All</Button>
-				</Link>
-			</div>
 			<Table>
 				<TableHeader>
 					<TableRow>
