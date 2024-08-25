@@ -24,6 +24,24 @@ export function CallLogsList() {
 		fetchCallLogs();
 	}, []);
 
+	function getCallType(toolsUsed: string[]): string {
+		if (toolsUsed.includes('transferCall')) {
+			return 'Transfer';
+		} else if (
+			toolsUsed.some(tool =>
+				[
+					'scheduleTestDrive',
+					'scheduleCarMaintenance',
+					'scheduleOilChange',
+				].includes(tool)
+			)
+		) {
+			return 'Conversion';
+		} else {
+			return 'Inquiry';
+		}
+	}
+
 	return (
 		<Table>
 			<TableHeader>
@@ -31,6 +49,8 @@ export function CallLogsList() {
 					<TableHead>Call SID</TableHead>
 					<TableHead>Created At</TableHead>
 					<TableHead>Ended At</TableHead>
+					<TableHead>Call Type</TableHead>
+					<TableHead>Tools Used</TableHead>
 					<TableHead>Actions</TableHead>
 				</TableRow>
 			</TableHeader>
@@ -42,6 +62,8 @@ export function CallLogsList() {
 						<TableCell>
 							{log.endedAt ? new Date(log.endedAt).toLocaleString() : 'N/A'}
 						</TableCell>
+						<TableCell>{getCallType(log.toolsUsed)}</TableCell>
+						<TableCell>{log.toolsUsed.join(', ')}</TableCell>
 						<TableCell>
 							<Link href={`/dashboard/call-logs/${log._id}`}>
 								<Button variant="outline">View Details</Button>

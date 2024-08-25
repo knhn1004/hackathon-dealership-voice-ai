@@ -27,6 +27,24 @@ export function CallLogDetail({ id }: { id: string }) {
 		fetchCallLogData();
 	}, [id]);
 
+	function getCallType(toolsUsed: string[]): string {
+		if (toolsUsed.includes('transferCall')) {
+			return 'Transfer';
+		} else if (
+			toolsUsed.some(tool =>
+				[
+					'scheduleTestDrive',
+					'scheduleCarMaintenance',
+					'scheduleOilChange',
+				].includes(tool)
+			)
+		) {
+			return 'Conversion';
+		} else {
+			return 'Inquiry';
+		}
+	}
+
 	if (!callLog) {
 		return <div>Loading...</div>;
 	}
@@ -35,28 +53,38 @@ export function CallLogDetail({ id }: { id: string }) {
 		<div className="space-y-6">
 			<Card>
 				<CardHeader>
-					<CardTitle>Call Information</CardTitle>
+					<CardTitle>Call Details</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<dl className="grid grid-cols-2 gap-4">
-						<div>
-							<dt className="font-semibold">Call SID</dt>
-							<dd>{callLog.callSid}</dd>
+					<dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+						<div className="sm:col-span-1">
+							<dt className="text-sm font-medium text-gray-500">Call SID</dt>
+							<dd className="mt-1 text-sm text-gray-900">{callLog.callSid}</dd>
 						</div>
-						<div>
-							<dt className="font-semibold">Stream SID</dt>
-							<dd>{callLog.streamSid}</dd>
+						<div className="sm:col-span-1">
+							<dt className="text-sm font-medium text-gray-500">Stream SID</dt>
+							<dd className="mt-1 text-sm text-gray-900">
+								{callLog.streamSid}
+							</dd>
 						</div>
-						<div>
-							<dt className="font-semibold">Created At</dt>
-							<dd>{new Date(callLog.createdAt).toLocaleString()}</dd>
+						<div className="sm:col-span-1">
+							<dt className="text-sm font-medium text-gray-500">Created At</dt>
+							<dd className="mt-1 text-sm text-gray-900">
+								{new Date(callLog.createdAt).toLocaleString()}
+							</dd>
 						</div>
-						<div>
-							<dt className="font-semibold">Ended At</dt>
-							<dd>
+						<div className="sm:col-span-1">
+							<dt className="text-sm font-medium text-gray-500">Ended At</dt>
+							<dd className="mt-1 text-sm text-gray-900">
 								{callLog.endedAt
 									? new Date(callLog.endedAt).toLocaleString()
 									: 'N/A'}
+							</dd>
+						</div>
+						<div className="sm:col-span-1">
+							<dt className="text-sm font-medium text-gray-500">Call Type</dt>
+							<dd className="mt-1 text-sm text-gray-900">
+								{getCallType(callLog.toolsUsed)}
 							</dd>
 						</div>
 					</dl>

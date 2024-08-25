@@ -5,7 +5,7 @@ export interface CallLog {
 	createdAt: string;
 	endedAt?: string;
 	fullTranscript?: string;
-	toolsUsed?: string[];
+	toolsUsed: string[];
 }
 
 export interface Transcription {

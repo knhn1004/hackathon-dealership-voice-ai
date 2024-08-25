@@ -23,6 +23,24 @@ export function RecentCallLogs() {
 		fetchCallLogs();
 	}, []);
 
+	function getCallType(toolsUsed: string[]): string {
+		if (toolsUsed.includes('transferCall')) {
+			return 'Transfer';
+		} else if (
+			toolsUsed.some(tool =>
+				[
+					'scheduleTestDrive',
+					'scheduleCarMaintenance',
+					'scheduleOilChange',
+				].includes(tool)
+			)
+		) {
+			return 'Conversion';
+		} else {
+			return 'Inquiry';
+		}
+	}
+
 	return (
 		<>
 			<div className="mt-4 flex justify-end">
@@ -36,6 +54,7 @@ export function RecentCallLogs() {
 						<TableHead>Call SID</TableHead>
 						<TableHead>Created At</TableHead>
 						<TableHead>Ended At</TableHead>
+						<TableHead>Call Type</TableHead>
 						<TableHead>Actions</TableHead>
 					</TableRow>
 				</TableHeader>
@@ -47,6 +66,7 @@ export function RecentCallLogs() {
 							<TableCell>
 								{log.endedAt ? new Date(log.endedAt).toLocaleString() : 'N/A'}
 							</TableCell>
+							<TableCell>{getCallType(log.toolsUsed)}</TableCell>
 							<TableCell>
 								<Link href={`/dashboard/call-logs/${log._id}`}>
 									<Button variant="outline">View Details</Button>
