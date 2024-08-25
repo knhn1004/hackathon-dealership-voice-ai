@@ -9,6 +9,7 @@ import AppointmentsList from '@/components/AppointmentsList';
 import { TotalCallsCard } from '@/components/TotalCallsCard';
 import { Appointment } from '@/lib/types/appointment';
 import { getAppointments } from '@/lib/actions/appointments';
+import { AverageDurationCard } from '@/components/AverageDurationCard';
 
 export default async function DashboardPage() {
 	const appointments: Appointment[] = (await getAppointments()).map(apt => ({
@@ -36,20 +37,7 @@ export default async function DashboardPage() {
 					<TabsContent value="overview" className="space-y-4">
 						<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
 							<TotalCallsCard />
-							<Card>
-								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-									<CardTitle className="text-sm font-medium">
-										Average Duration
-									</CardTitle>
-								</CardHeader>
-								<CardContent>
-									<div className="text-2xl font-bold">5m 23s</div>
-									<p className="text-xs text-muted-foreground">
-										-2.5% from last month
-									</p>
-								</CardContent>
-							</Card>
-							{/* Add more cards for other metrics */}
+							<AverageDurationCard />
 						</div>
 						<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
 							<Card className="col-span-4">

@@ -51,10 +51,6 @@ export async function CallLogDetail({ id }: { id: string }) {
 		return <Badge variant={variant}>{callType}</Badge>;
 	}
 
-	if (!callLog) {
-		return <div>Loading...</div>;
-	}
-
 	return (
 		<div className="space-y-6">
 			<Card>
@@ -85,6 +81,12 @@ export async function CallLogDetail({ id }: { id: string }) {
 								{callLog.endedAt
 									? new Date(callLog.endedAt).toLocaleString()
 									: 'N/A'}
+							</dd>
+						</div>
+						<div className="sm:col-span-1">
+							<dt className="text-sm font-medium text-gray-500">Duration</dt>
+							<dd className="mt-1 text-sm text-gray-900">
+								{callLog.duration || 'N/A'}
 							</dd>
 						</div>
 						<div className="sm:col-span-1">

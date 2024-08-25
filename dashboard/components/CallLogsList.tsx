@@ -63,6 +63,7 @@ export default async function CallLogsList() {
 							<TableHead>Call SID</TableHead>
 							<TableHead>Created At</TableHead>
 							<TableHead>Ended At</TableHead>
+							<TableHead>Duration</TableHead>
 							<TableHead>Call Type</TableHead>
 							<TableHead>Tools Used</TableHead>
 							<TableHead>Actions</TableHead>
@@ -78,6 +79,7 @@ export default async function CallLogsList() {
 								<TableCell>
 									{log.endedAt ? new Date(log.endedAt).toLocaleString() : 'N/A'}
 								</TableCell>
+								<TableCell>{log.duration}</TableCell>
 								<TableCell>{getCallTypeBadge(log.toolsUsed)}</TableCell>
 								<TableCell>{log.toolsUsed.join(', ')}</TableCell>
 								<TableCell>

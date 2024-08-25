@@ -58,6 +58,7 @@ export async function RecentCallLogs() {
 						<TableHead>Call SID</TableHead>
 						<TableHead>Created At</TableHead>
 						<TableHead>Ended At</TableHead>
+						<TableHead>Duration</TableHead>
 						<TableHead>Call Type</TableHead>
 						<TableHead>Actions</TableHead>
 					</TableRow>
@@ -70,6 +71,7 @@ export async function RecentCallLogs() {
 							<TableCell>
 								{log.endedAt ? new Date(log.endedAt).toLocaleString() : 'N/A'}
 							</TableCell>
+							<TableCell>{log.duration}</TableCell>
 							<TableCell>{getCallTypeBadge(log.toolsUsed)}</TableCell>
 							<TableCell>
 								<Link href={`/dashboard/call-logs/${log._id}`}>
