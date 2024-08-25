@@ -25,7 +25,7 @@ This project consists of two main components: a voice-based AI assistant for han
 
 ## Caller Agent
 
-The caller agent is a Node.js application that uses various APIs and services to create an AI-powered voice assistant for a car dealership.
+The caller agent is built on top of the [call-gpt project by Twilio Labs](https://github.com/twilio-labs/call-gpt), which provides a foundation for creating AI-powered voice applications using Twilio Media Streams. We've extended and customized this project to fit the specific needs of our car dealership assistant.
 
 ### Key Features:
 
