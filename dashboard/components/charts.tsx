@@ -34,7 +34,6 @@ export function BarChart() {
 	useEffect(() => {
 		async function fetchCallVolume() {
 			const volume = await getCallVolume();
-			console.log(volume);
 			setCallVolume(volume);
 		}
 		fetchCallVolume();

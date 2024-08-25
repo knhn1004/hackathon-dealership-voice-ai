@@ -106,7 +106,10 @@ class DbService {
 				return acc;
 			}, {});
 
-			const cursor = this.getDb().collection(collection).find(query);
+			const cursor = this.getDb()
+				.collection(collection)
+				.find(query)
+				.sort({ createdAt: -1 });
 			return await cursor.toArray();
 		} catch (error) {
 			console.error('Error querying documents:', error);
