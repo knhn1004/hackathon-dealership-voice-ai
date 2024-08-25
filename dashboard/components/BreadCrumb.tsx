@@ -7,6 +7,7 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import React from 'react';
 
 interface BreadcrumbItemProps {
 	label: string;
@@ -22,18 +23,18 @@ export function BreadcrumbNav({ items }: BreadcrumbProps) {
 		<Breadcrumb>
 			<BreadcrumbList>
 				{items.map((item, index) => (
-					<BreadcrumbItem key={item.href}>
-						{index < items.length - 1 ? (
-							<>
+					<React.Fragment key={item.href}>
+						<BreadcrumbItem>
+							{index < items.length - 1 ? (
 								<BreadcrumbLink asChild>
 									<Link href={item.href}>{item.label}</Link>
 								</BreadcrumbLink>
-								<BreadcrumbSeparator />
-							</>
-						) : (
-							<BreadcrumbPage>{item.label}</BreadcrumbPage>
-						)}
-					</BreadcrumbItem>
+							) : (
+								<BreadcrumbPage>{item.label}</BreadcrumbPage>
+							)}
+						</BreadcrumbItem>
+						{index < items.length - 1 && <BreadcrumbSeparator />}
+					</React.Fragment>
 				))}
 			</BreadcrumbList>
 		</Breadcrumb>

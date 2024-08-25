@@ -1,5 +1,5 @@
 import { CallLogsList } from '@/components/CallLogsList';
-import { BreadcrumbNav } from '@/components/Breadcrumb';
+import { BreadcrumbNav } from '@/components/BreadCrumb';
 
 export default function CallLogsPage() {
 	const breadcrumbItems = [
