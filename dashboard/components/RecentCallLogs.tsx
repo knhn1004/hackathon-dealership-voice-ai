@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
 	Table,
@@ -13,16 +12,8 @@ import { getCallLogs } from '@/lib/actions/call-logs';
 import { CallLog } from '@/lib/types/callLog';
 import { Badge } from '@/components/ui/badge';
 
-export function RecentCallLogs() {
-	const [callLogs, setCallLogs] = useState<CallLog[]>([]);
-
-	useEffect(() => {
-		async function fetchCallLogs() {
-			const logs = await getCallLogs();
-			setCallLogs(logs.slice(0, 5)); // Only show the 5 most recent logs
-		}
-		fetchCallLogs();
-	}, []);
+export async function RecentCallLogs() {
+	const callLogs: CallLog[] = (await getCallLogs()).slice(0, 5);
 
 	function getCallType(toolsUsed: string[]): string {
 		if (toolsUsed.includes('transferCall')) {

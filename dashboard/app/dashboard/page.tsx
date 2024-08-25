@@ -1,4 +1,4 @@
-'use client';
+'use server';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -7,8 +7,20 @@ import { RecentCallLogs } from '@/components/RecentCallLogs';
 import CallLogsList from '@/components/CallLogsList';
 import AppointmentsList from '@/components/AppointmentsList';
 import { TotalCallsCard } from '@/components/TotalCallsCard';
+import { Appointment } from '@/lib/types/appointment';
+import { getAppointments } from '@/lib/actions/appointments';
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+	const appointments: Appointment[] = (await getAppointments()).map(apt => ({
+		...apt,
+		_id: apt._id.toString(),
+		date: apt.createdAt
+			? new Date(apt.createdAt).toLocaleDateString()
+			: 'Invalid Date',
+		type:
+			(apt.type as 'oil_change' | 'maintenance' | 'test_drive') ||
+			'maintenance',
+	}));
 	return (
 		<div className="flex-col md:flex">
 			<div className="flex-1 space-y-4 p-8 pt-6">
@@ -70,7 +82,7 @@ export default function DashboardPage() {
 						<CallLogsList />
 					</TabsContent>
 					<TabsContent value="appointments">
-						<AppointmentsList />
+						<AppointmentsList appointments={appointments} />
 					</TabsContent>
 				</Tabs>
 			</div>

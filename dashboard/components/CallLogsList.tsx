@@ -1,5 +1,3 @@
-'use client';
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
 	Table,
@@ -15,16 +13,8 @@ import { CallLog } from '@/lib/types/callLog';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-export default function CallLogsList() {
-	const [callLogs, setCallLogs] = useState<CallLog[]>([]);
-
-	useEffect(() => {
-		async function fetchCallLogs() {
-			const logs = await getCallLogs();
-			setCallLogs(logs);
-		}
-		fetchCallLogs();
-	}, []);
+export default async function CallLogsList() {
+	const callLogs: CallLog[] = await getCallLogs();
 
 	function getCallType(toolsUsed: string[]): string {
 		if (toolsUsed.includes('transferCall')) {

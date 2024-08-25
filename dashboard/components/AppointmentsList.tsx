@@ -1,6 +1,3 @@
-'use client';
-
-import { useEffect, useState } from 'react';
 import {
 	Table,
 	TableBody,
@@ -10,31 +7,13 @@ import {
 	TableRow,
 } from '@/components/ui/table';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getAppointments } from '@/lib/actions/appointments';
 import { Appointment } from '@/lib/types/appointment';
 
-export default function AppointmentsList() {
-	const [appointments, setAppointments] = useState<Appointment[]>([]);
+interface IAppointmentsList {
+	appointments: Appointment[];
+}
 
-	useEffect(() => {
-		async function fetchAppointments() {
-			const fetchedAppointments = await getAppointments();
-			setAppointments(
-				fetchedAppointments.map(apt => ({
-					...apt,
-					_id: apt._id.toString(),
-					date: apt.createdAt
-						? new Date(apt.createdAt).toLocaleDateString()
-						: 'Invalid Date',
-					type:
-						(apt.type as 'oil_change' | 'maintenance' | 'test_drive') ||
-						'maintenance',
-				}))
-			);
-		}
-		fetchAppointments();
-	}, []);
-
+export default function AppointmentsList({ appointments }: IAppointmentsList) {
 	return (
 		<Card>
 			<CardHeader>

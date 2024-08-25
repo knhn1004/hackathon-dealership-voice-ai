@@ -1,5 +1,3 @@
-'use client';
-import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
 	Table,
@@ -10,23 +8,13 @@ import {
 	TableRow,
 } from '@/components/ui/table';
 import { getCallLogData } from '@/lib/actions/call-logs';
-import { CallLog, Transcription } from '@/lib/types/callLog';
 import { Badge } from '@/components/ui/badge';
 
-export function CallLogDetail({ id }: { id: string }) {
-	const [callLog, setCallLog] = useState<CallLog | null>(null);
-	const [transcriptions, setTranscriptions] = useState<Transcription[]>([]);
-
-	useEffect(() => {
-		async function fetchCallLogData() {
-			const { callLog, transcriptions } = await getCallLogData(id);
-			if (callLog) {
-				setCallLog(callLog);
-				setTranscriptions(transcriptions);
-			}
-		}
-		fetchCallLogData();
-	}, [id]);
+export async function CallLogDetail({ id }: { id: string }) {
+	const { callLog, transcriptions } = await getCallLogData(id);
+	if (!callLog) {
+		return <div>Loading...</div>;
+	}
 
 	function getCallType(toolsUsed: string[]): string {
 		if (toolsUsed.includes('transferCall')) {
