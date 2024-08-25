@@ -8,8 +8,11 @@ export default function CallLogDetailPage({
 }) {
 	const breadcrumbItems = [
 		{ label: 'Dashboard', href: '/dashboard' },
-		{ label: 'Call Logs', href: '/dashboard/call-logs' },
-		{ label: `${params.id}`, href: `/dashboard/call-logs/${params.id}`, active: true },
+		{
+			label: `${params.id}`,
+			href: `/dashboard/call-logs/${params.id}`,
+			active: true,
+		},
 	];
 	return (
 		<div className="container mx-auto py-10">
