@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/table';
 import { getCallLogData } from '@/lib/actions/call-logs';
 import { CallLog, Transcription } from '@/lib/types/callLog';
+import { Badge } from '@/components/ui/badge';
 
 export function CallLogDetail({ id }: { id: string }) {
 	const [callLog, setCallLog] = useState<CallLog | null>(null);
@@ -43,6 +44,23 @@ export function CallLogDetail({ id }: { id: string }) {
 		} else {
 			return 'Inquiry';
 		}
+	}
+
+	function getCallTypeBadge(toolsUsed: string[]): JSX.Element {
+		const callType = getCallType(toolsUsed);
+		let variant: 'default' | 'secondary' | 'destructive' = 'default';
+
+		switch (callType) {
+			case 'Transfer':
+				variant = 'secondary';
+				break;
+			case 'Conversion':
+				variant = 'destructive';
+				break;
+			// "Inquiry" will use the default variant
+		}
+
+		return <Badge variant={variant}>{callType}</Badge>;
 	}
 
 	if (!callLog) {
@@ -84,7 +102,7 @@ export function CallLogDetail({ id }: { id: string }) {
 						<div className="sm:col-span-1">
 							<dt className="text-sm font-medium text-gray-500">Call Type</dt>
 							<dd className="mt-1 text-sm text-gray-900">
-								{getCallType(callLog.toolsUsed)}
+								{getCallTypeBadge(callLog.toolsUsed)}
 							</dd>
 						</div>
 					</dl>

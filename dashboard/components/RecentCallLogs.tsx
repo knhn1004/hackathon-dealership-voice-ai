@@ -11,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { getCallLogs } from '@/lib/actions/call-logs';
 import { CallLog } from '@/lib/types/callLog';
+import { Badge } from '@/components/ui/badge';
 
 export function RecentCallLogs() {
 	const [callLogs, setCallLogs] = useState<CallLog[]>([]);
@@ -41,6 +42,23 @@ export function RecentCallLogs() {
 		}
 	}
 
+	function getCallTypeBadge(toolsUsed: string[]): JSX.Element {
+		const callType = getCallType(toolsUsed);
+		let variant: 'default' | 'secondary' | 'destructive' = 'default';
+
+		switch (callType) {
+			case 'Transfer':
+				variant = 'secondary';
+				break;
+			case 'Conversion':
+				variant = 'destructive';
+				break;
+			// "Inquiry" will use the default variant
+		}
+
+		return <Badge variant={variant}>{callType}</Badge>;
+	}
+
 	return (
 		<>
 			<div className="mt-4 flex justify-end">
@@ -66,7 +84,7 @@ export function RecentCallLogs() {
 							<TableCell>
 								{log.endedAt ? new Date(log.endedAt).toLocaleString() : 'N/A'}
 							</TableCell>
-							<TableCell>{getCallType(log.toolsUsed)}</TableCell>
+							<TableCell>{getCallTypeBadge(log.toolsUsed)}</TableCell>
 							<TableCell>
 								<Link href={`/dashboard/call-logs/${log._id}`}>
 									<Button variant="outline">View Details</Button>
