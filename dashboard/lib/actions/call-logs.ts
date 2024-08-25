@@ -98,6 +98,36 @@ export async function getCallVolume(): Promise<
 	});
 }
 
-function getDb() {
-	throw new Error('Function not implemented.');
+export async function getTotalCalls(): Promise<{
+	total: number;
+	percentageChange: number;
+}> {
+	return withDbConnection(async () => {
+		const currentMonth = moment().startOf('month');
+		const lastMonth = moment().subtract(1, 'month').startOf('month');
+
+		const currentMonthCalls = await dbService
+			.getDb()
+			.collection('call_logs')
+			.countDocuments({
+				createdAt: { $gte: currentMonth.toDate() },
+			});
+
+		const lastMonthCalls = await dbService
+			.getDb()
+			.collection('call_logs')
+			.countDocuments({
+				createdAt: { $gte: lastMonth.toDate(), $lt: currentMonth.toDate() },
+			});
+
+		const percentageChange =
+			lastMonthCalls > 0
+				? ((currentMonthCalls - lastMonthCalls) / lastMonthCalls) * 100
+				: 0;
+
+		return {
+			total: currentMonthCalls,
+			percentageChange,
+		};
+	});
 }

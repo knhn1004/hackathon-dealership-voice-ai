@@ -6,6 +6,7 @@ import { BarChart, PieChart } from '@/components/charts';
 import { RecentCallLogs } from '@/components/RecentCallLogs';
 import CallLogsList from '@/components/CallLogsList';
 import AppointmentsList from '@/components/AppointmentsList';
+import { TotalCallsCard } from '@/components/TotalCallsCard';
 
 export default function DashboardPage() {
 	return (
@@ -22,19 +23,7 @@ export default function DashboardPage() {
 					</TabsList>
 					<TabsContent value="overview" className="space-y-4">
 						<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-							<Card>
-								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-									<CardTitle className="text-sm font-medium">
-										Total Calls
-									</CardTitle>
-								</CardHeader>
-								<CardContent>
-									<div className="text-2xl font-bold">1,234</div>
-									<p className="text-xs text-muted-foreground">
-										+20.1% from last month
-									</p>
-								</CardContent>
-							</Card>
+							<TotalCallsCard />
 							<Card>
 								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 									<CardTitle className="text-sm font-medium">
